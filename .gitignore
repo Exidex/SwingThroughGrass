@@ -1,0 +1,25 @@
+.classpath
+.nb-gradle-properties
+.project
+*.launch
+*.iml
+*.ipr
+*.iws
+
+.idea/
+.gradle/
+.nb-gradle/
+.settings/
+run/
+classes/
+out/
+build/
+eclipse/
+
+CREDITS-fml.txt
+LICENSE-new.txt
+MinecraftForge-Credits.txt
+Paulscode IBXM Library License.txt
+Paulscode SoundSystem CodecIBXM License.txt
+README.txt
+forge-*.txt
