@@ -1,6 +1,5 @@
 package com.exidex.stg;
 
-import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -14,7 +13,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -53,13 +51,7 @@ public final class LeftClickEventHandler {
 
 	private static Entity getEntityClosestToStartPos(Entity entityIn, World world, Vec3d startPos, Vec3d endPos) {
 		Entity entity = null;
-		List<Entity> list = world.getEntitiesInAABBexcluding(entityIn, new AxisAlignedBB(startPos.xCoord,startPos.yCoord,startPos.zCoord, endPos.xCoord, endPos.yCoord, endPos.zCoord), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>()
-		{
-			public boolean apply(@Nullable Entity entity)
-			{
-				return entity != null && entity.canBeCollidedWith();
-			}
-		}));
+		List<Entity> list = world.getEntitiesInAABBexcluding(entityIn, new AxisAlignedBB(startPos.xCoord,startPos.yCoord,startPos.zCoord, endPos.xCoord, endPos.yCoord, endPos.zCoord), Predicates.and(EntitySelectors.NOT_SPECTATING, entity1 -> entity1 != null && entity1.canBeCollidedWith()));
 		double d0 = 0.0D;
 		AxisAlignedBB axisAlignedBB;
 
