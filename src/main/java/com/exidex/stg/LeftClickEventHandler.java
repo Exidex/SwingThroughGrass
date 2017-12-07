@@ -36,7 +36,7 @@ public final class LeftClickEventHandler {
 
 		Vec3d from = new Vec3d(entityPlayer.posX, entityPlayer.posY + (double)entityPlayer.getEyeHeight(), entityPlayer.posZ);
 		Vec3d vec3d = entityPlayer.getLook(1.0F);
-		Vec3d to = from.addVector(vec3d.xCoord * blockReachDistance, vec3d.yCoord * blockReachDistance, vec3d.zCoord * blockReachDistance);
+		Vec3d to = from.addVector(vec3d.x * blockReachDistance, vec3d.y * blockReachDistance, vec3d.z * blockReachDistance);
 
 		Entity targetEntity = getEntityClosestToStartPos(entityPlayer, event.getWorld(), from, to);
 
@@ -51,12 +51,12 @@ public final class LeftClickEventHandler {
 
 	private static Entity getEntityClosestToStartPos(Entity entityIn, World world, Vec3d startPos, Vec3d endPos) {
 		Entity entity = null;
-		List<Entity> list = world.getEntitiesInAABBexcluding(entityIn, new AxisAlignedBB(startPos.xCoord,startPos.yCoord,startPos.zCoord, endPos.xCoord, endPos.yCoord, endPos.zCoord), Predicates.and(EntitySelectors.NOT_SPECTATING, entity1 -> entity1 != null && entity1.canBeCollidedWith()));
+		List<Entity> list = world.getEntitiesInAABBexcluding(entityIn, new AxisAlignedBB(startPos.x,startPos.y,startPos.z, endPos.x, endPos.y, endPos.z), Predicates.and(EntitySelectors.NOT_SPECTATING, entity1 -> entity1 != null && entity1.canBeCollidedWith()));
 		double d0 = 0.0D;
 		AxisAlignedBB axisAlignedBB;
 
 		for(Entity entity1 : list) {
-			axisAlignedBB = entity1.getEntityBoundingBox().expandXyz(0.3D);
+			axisAlignedBB = entity1.getEntityBoundingBox().expand(0.3D, 0.3D, 0.3D);
 			RayTraceResult raytraceResult = axisAlignedBB.calculateIntercept(startPos, endPos);
 
 			if(raytraceResult != null) {
