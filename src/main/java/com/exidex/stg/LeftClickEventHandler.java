@@ -71,8 +71,10 @@ public final class LeftClickEventHandler {
 									&& e instanceof EntityLivingBase
 									&& !(e instanceof FakePlayer);
 
-							for (Function<EntityLivingBase, Boolean> predicate : PREDICATES) {
-								filter &= predicate.apply((EntityLivingBase) e);
+							if (filter) {
+								for (Function<EntityLivingBase, Boolean> predicate : PREDICATES) {
+									filter &= predicate.apply((EntityLivingBase) e);
+								}
 							}
 
 							return filter;
