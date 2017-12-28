@@ -12,6 +12,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nullable;
@@ -21,6 +22,7 @@ import java.util.List;
  * @author exidex.
  * @since 02.04.2017.
  */
+@Mod.EventBusSubscriber
 public final class LeftClickEventHandler {
 
 	private LeftClickEventHandler() {}
@@ -47,7 +49,7 @@ public final class LeftClickEventHandler {
 				entityPlayer.attackTargetEntityWithCurrentItem(targetEntity);
 				entityPlayer.resetCooldown();
 			}
-			event.setCanceled(true);
+			event.setCanceled(STGConfig.cancelClickEventPropagation);
 		}
 	}
 
