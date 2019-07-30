@@ -45,6 +45,7 @@ public final class LeftClickEventHandler {
 				player.attackTargetEntityWithCurrentItem(rayTraceResult.getEntity());
 				player.resetCooldown();
 			}
+			event.setCanceled(SwingThroughGrassConfig.CANCEL_CLICK_EVENT_PROPAGATION.get());
 		}
 	}
 
