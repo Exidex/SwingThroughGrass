@@ -33,7 +33,7 @@ public final class LeftClickEventHandler {
 			return;
 		}
 
-		PlayerEntity player = event.getEntityPlayer();
+		PlayerEntity player = event.getPlayer();
 		if (player == null) {
 			return;
 		}
@@ -54,7 +54,7 @@ public final class LeftClickEventHandler {
 		Vec3d look = player.getLook(partialTicks);
 		Vec3d to = from.add(look.x * blockReachDistance, look.y * blockReachDistance, look.z * blockReachDistance);
 
-		return ProjectileHelper.func_221271_a(
+		return ProjectileHelper.rayTraceEntities(
 			player.world,
 			player,
 			from,

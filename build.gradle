@@ -10,7 +10,7 @@ buildscript {
 }
 
 plugins {
-    id 'com.matthewprenger.cursegradle' version '1.3.0'
+    id 'com.matthewprenger.cursegradle' version '1.4.0'
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -19,12 +19,12 @@ apply plugin: 'maven-publish'
 
 archivesBaseName = 'swingthroughgrass'
 group = "com.exidex.swingthroughgrass"
-version = "1.14.4-1.3.2"
+version = "1.15.2-1.4.0"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190806-1.14.3'
+    mappings channel: 'snapshot', version: '20200123-1.15.1'
 
     runs {
         client {
@@ -58,7 +58,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.0.45'
+    minecraft 'net.minecraftforge:forge:1.15.2-31.0.0'
 }
 
 jar {
