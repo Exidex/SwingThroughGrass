@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+'
     }
 }
 
@@ -19,12 +19,12 @@ apply plugin: 'maven-publish'
 
 archivesBaseName = 'swingthroughgrass'
 group = "com.exidex.swingthroughgrass"
-version = "1.15.2-1.4.0"
+version = "1.16.1-1.5.0"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200123-1.15.1'
+    mappings channel: 'snapshot', version: '20200514-1.16'
 
     runs {
         client {
@@ -58,7 +58,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.0.0'
+    minecraft 'net.minecraftforge:forge:1.16.1-32.0.108'
 }
 
 jar {

@@ -8,7 +8,7 @@ import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -50,9 +50,9 @@ public final class LeftClickEventHandler {
 
 	@Nullable
 	private static EntityRayTraceResult rayTraceEntity(PlayerEntity player, float partialTicks, double blockReachDistance) {
-		Vec3d from = player.getEyePosition(partialTicks);
-		Vec3d look = player.getLook(partialTicks);
-		Vec3d to = from.add(look.x * blockReachDistance, look.y * blockReachDistance, look.z * blockReachDistance);
+		Vector3d from = player.getEyePosition(partialTicks);
+		Vector3d look = player.getLook(partialTicks);
+		Vector3d to = from.add(look.x * blockReachDistance, look.y * blockReachDistance, look.z * blockReachDistance);
 
 		return ProjectileHelper.rayTraceEntities(
 			player.world,
