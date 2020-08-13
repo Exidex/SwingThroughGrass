@@ -19,7 +19,7 @@ apply plugin: 'maven-publish'
 
 archivesBaseName = 'swingthroughgrass'
 group = "com.exidex.swingthroughgrass"
-version = "1.16.1-1.5.0"
+version = "1.16.1-1.5.1"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
