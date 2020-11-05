@@ -19,7 +19,7 @@ apply plugin: 'maven-publish'
 
 archivesBaseName = 'swingthroughgrass'
 group = "com.exidex.swingthroughgrass"
-version = "1.16.3-1.5.2"
+version = "1.16.4-1.5.3"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
@@ -58,7 +58,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.3-34.1.22'
+    minecraft 'net.minecraftforge:forge:1.16.4-35.0.2'
 }
 
 jar {
