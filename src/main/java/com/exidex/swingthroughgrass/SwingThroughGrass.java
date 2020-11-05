@@ -15,16 +15,16 @@ import java.util.function.Predicate;
 @Mod("swingthroughgrass")
 public class SwingThroughGrass {
 
-	public SwingThroughGrass() {
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
-		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
-	}
+    public SwingThroughGrass() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
+    }
 
-	@SuppressWarnings("unchecked")
-	private void processIMC(final InterModProcessEvent event) {
-		event.getIMCStream("ENTITY_FILTER"::equals)
-			.map(InterModComms.IMCMessage::getMessageSupplier)
-			.map(supplier -> (Predicate<LivingEntity>) supplier.get())
-			.forEach(LeftClickEventHandler.PREDICATES::add);
-	}
+    @SuppressWarnings("unchecked")
+    private void processIMC(final InterModProcessEvent event) {
+        event.getIMCStream("ENTITY_FILTER"::equals)
+                .map(InterModComms.IMCMessage::getMessageSupplier)
+                .map(supplier -> (Predicate<LivingEntity>) supplier.get())
+                .forEach(LeftClickEventHandler.PREDICATES::add);
+    }
 }
