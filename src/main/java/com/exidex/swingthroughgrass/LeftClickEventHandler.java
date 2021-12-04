@@ -1,15 +1,15 @@
 package com.exidex.swingthroughgrass;
 
 import com.google.common.collect.Lists;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -35,36 +35,36 @@ public final class LeftClickEventHandler {
             return;
         }
 
-        PlayerEntity player = event.getPlayer();
+        Player player = event.getPlayer();
         if (player == null) {
             return;
         }
 
-        EntityRayTraceResult rayTraceResult = rayTraceEntity(player, 1.0F, 4.5D);
+        EntityHitResult rayTraceResult = rayTraceEntity(player, 1.0F, 4.5D);
 
         if (rayTraceResult != null) {
-            if (!event.getWorld().isRemote) {
-                player.attackTargetEntityWithCurrentItem(rayTraceResult.getEntity());
-                player.resetCooldown();
+            if (!event.getWorld().isClientSide) {
+                player.attack(rayTraceResult.getEntity());
+                player.resetAttackStrengthTicker();
             }
         }
     }
 
     @Nullable
-    private static EntityRayTraceResult rayTraceEntity(PlayerEntity player, float partialTicks, double blockReachDistance) {
-        Vector3d from = player.getEyePosition(partialTicks);
-        Vector3d look = player.getLook(partialTicks);
-        Vector3d to = from.add(look.x * blockReachDistance, look.y * blockReachDistance, look.z * blockReachDistance);
+    private static EntityHitResult rayTraceEntity(Player player, float partialTicks, double blockReachDistance) {
+        Vec3 from = player.getEyePosition(partialTicks);
+        Vec3 look = player.getViewVector(partialTicks);
+        Vec3 to = from.add(look.x * blockReachDistance, look.y * blockReachDistance, look.z * blockReachDistance);
 
-        return ProjectileHelper.rayTraceEntities(
-                player.world,
+        return ProjectileUtil.getEntityHitResult(
+                player.level,
                 player,
                 from,
                 to,
-                new AxisAlignedBB(from, to),
-                EntityPredicates.CAN_AI_TARGET
+                new AABB(from, to),
+                EntitySelector.NO_CREATIVE_OR_SPECTATOR
                         .and(e -> e != null
-                                && e.canBeCollidedWith()
+                                && e.isPickable()
                                 && e instanceof LivingEntity
                                 && !(e instanceof FakePlayer)
                                 && !getAllRidingEntities(player).contains(e)
@@ -73,11 +73,11 @@ public final class LeftClickEventHandler {
         );
     }
 
-    private static List<Entity> getAllRidingEntities(PlayerEntity player) {
+    private static List<Entity> getAllRidingEntities(Player player) {
         List<Entity> ridingEntities = new ArrayList<>();
         Entity entity = player;
         while (entity.isPassenger()) {
-            entity = entity.getRidingEntity();
+            entity = entity.getVehicle();
             ridingEntities.add(entity);
         }
         return ridingEntities;

@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[35,)"
+loaderVersion="[37,)"
 issueTrackerURL="https://github.com/Exidex/SwingThroughGrass/issues"
 license="MIT"
 
@@ -16,13 +16,13 @@ description='''Don't let the grass be between you and your prey!'''
 [[dependencies.swingthroughgrass]]
     modId="forge"
     mandatory=true
-    versionRange="[35,)"
+    versionRange="[37,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.swingthroughgrass]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.4,)"
+    versionRange="[1.17.1,)"
     ordering="NONE"
     side="BOTH"
