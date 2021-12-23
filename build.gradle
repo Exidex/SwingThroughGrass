@@ -18,12 +18,12 @@ apply plugin: 'maven-publish'
 
 archivesBaseName = 'swingthroughgrass'
 group = "com.exidex.swingthroughgrass"
-version = "1.18-1.7.0"
+version = "1.18.1-1.8.0"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-    mappings channel: 'official', version: '1.18'
+    mappings channel: 'official', version: '1.18.1'
 
     runs {
         client {
@@ -57,7 +57,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18-38.0.14'
+    minecraft 'net.minecraftforge:forge:1.18.1-39.0.8'
 }
 
 jar {
@@ -84,6 +84,6 @@ curseforge {
     project {
         id = '264353'
         releaseType = 'release'
-        addGameVersion '1.18'
+        addGameVersion '1.18.1'
     }
 }
