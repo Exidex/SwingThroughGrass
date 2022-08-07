@@ -30,12 +30,12 @@ public final class LeftClickEventHandler {
     @SubscribeEvent
     public static void onLeftClick(PlayerInteractEvent.LeftClickBlock event) {
 
-        BlockState state = event.getWorld().getBlockState(event.getPos());
-        if (!state.getCollisionShape(event.getWorld(), event.getPos()).isEmpty()) {
+        BlockState state = event.getLevel().getBlockState(event.getPos());
+        if (!state.getCollisionShape(event.getLevel(), event.getPos()).isEmpty()) {
             return;
         }
 
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         if (player == null) {
             return;
         }
@@ -43,7 +43,7 @@ public final class LeftClickEventHandler {
         EntityHitResult rayTraceResult = rayTraceEntity(player, 1.0F, 4.5D);
 
         if (rayTraceResult != null) {
-            if (!event.getWorld().isClientSide) {
+            if (!event.getLevel().isClientSide) {
                 player.attack(rayTraceResult.getEntity());
                 player.resetAttackStrengthTicker();
             }
