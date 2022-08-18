@@ -16,7 +16,7 @@ description='''Don't let the grass be between you and your prey!'''
 [[dependencies.swingthroughgrass]]
     modId="forge"
     mandatory=true
-    versionRange="[41,)"
+    versionRange="[41.0.94,)"
     ordering="NONE"
     side="BOTH"
 
