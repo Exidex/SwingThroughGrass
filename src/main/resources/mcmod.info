@@ -1,0 +1,16 @@
+[
+{
+  "modid": "stg",
+  "name": "SwingThroughGrass",
+  "description": "Don't let the grass be between you and your prey!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Exidex"],
+  "credits": "Direwolf20, LostGameDev",
+  "logoFile": "logo.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]
