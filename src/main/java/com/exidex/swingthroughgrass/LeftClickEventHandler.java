@@ -1,6 +1,7 @@
 package com.exidex.swingthroughgrass;
 
 import com.google.common.collect.Lists;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -59,7 +60,6 @@ public final class LeftClickEventHandler {
         }
 
         return ProjectileUtil.getEntityHitResult(
-                player.level(),
                 player,
                 from,
                 to,
@@ -71,7 +71,8 @@ public final class LeftClickEventHandler {
                                 && !(e instanceof FakePlayer)
                                 && !getAllRidingEntities(player).contains(e)
                                 && PREDICATES.stream().allMatch(predicate -> predicate.test((LivingEntity) e))
-                        )
+                        ),
+                Mth.square(blockReachDistance)
         );
     }
 
