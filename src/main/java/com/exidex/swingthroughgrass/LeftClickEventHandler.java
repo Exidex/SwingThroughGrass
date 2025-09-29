@@ -2,7 +2,6 @@ package com.exidex.swingthroughgrass;
 
 import com.google.common.collect.Lists;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -11,60 +10,56 @@ import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public final class LeftClickEventHandler {
 
     public static final List<Predicate<LivingEntity>> PREDICATES = Lists.newArrayList();
 
-    private LeftClickEventHandler() { }
+    private LeftClickEventHandler() {
+    }
 
     @SubscribeEvent
     public static void onLeftClick(PlayerInteractEvent.LeftClickBlock event) {
 
-        BlockState state = event.getLevel().getBlockState(event.getPos());
+        var state = event.getLevel().getBlockState(event.getPos());
         if (!state.getCollisionShape(event.getLevel(), event.getPos()).isEmpty()) {
             return;
         }
 
-        Player player = event.getEntity();
-        if (player == null) {
-            return;
-        }
+        var player = event.getEntity();
 
-        EntityHitResult rayTraceResult = rayTraceEntity(player, 1.0F, Math.max(player.getReachDistance(), player.getAttackRange()));
+        var rayTraceResult = rayTraceEntity(player, 1.0F, Math.max(player.blockInteractionRange(), player.entityInteractionRange()));
 
         if (rayTraceResult != null) {
             if (!event.getLevel().isClientSide) {
                 player.attack(rayTraceResult.getEntity());
-                player.resetAttackStrengthTicker();
             }
         }
     }
 
     @Nullable
     private static EntityHitResult rayTraceEntity(Player player, float partialTicks, double blockReachDistance) {
-        Vec3 from = player.getEyePosition(partialTicks);
-        Vec3 look = player.getViewVector(partialTicks);
-        Vec3 to = from.add(look.x * blockReachDistance, look.y * blockReachDistance, look.z * blockReachDistance);
+        var from = player.getEyePosition(partialTicks);
+        var look = player.getViewVector(partialTicks);
+        var to = from.add(look.x * blockReachDistance, look.y * blockReachDistance, look.z * blockReachDistance);
 
-        HitResult hitresult = player.level.clip(new ClipContext(from, to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
-        if (hitresult.getType() != HitResult.Type.MISS) {
-            to = hitresult.getLocation();
+        var hitResult = player.level().clip(new ClipContext(from, to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
+        if (hitResult.getType() != HitResult.Type.MISS) {
+            to = hitResult.getLocation();
         }
 
         return ProjectileUtil.getEntityHitResult(
-                player.level,
+                player.level(),
                 player,
                 from,
                 to,
@@ -81,10 +76,14 @@ public final class LeftClickEventHandler {
     }
 
     private static List<Entity> getAllRidingEntities(Player player) {
-        List<Entity> ridingEntities = new ArrayList<>();
+        var ridingEntities = new ArrayList<Entity>();
         Entity entity = player;
         while (entity.isPassenger()) {
-            entity = entity.getVehicle();
+            var vehicle = entity.getVehicle();
+            if (vehicle == null) {
+                break;
+            }
+            entity = vehicle;
             ridingEntities.add(entity);
         }
         return ridingEntities;

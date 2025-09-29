@@ -1,0 +1,23 @@
+name: Publish
+
+on:
+  workflow_dispatch: { }
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v5
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: 21
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Publish
+        run: ./gradlew publishCurseforge
+        env:
+          ORG_GRADLE_PROJECT_curseApiKey: ${{ secrets.CURSE_API_KEY }}

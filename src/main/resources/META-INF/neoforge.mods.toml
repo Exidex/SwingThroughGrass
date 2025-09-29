@@ -1,11 +1,11 @@
 modLoader="javafml"
-loaderVersion="[41,)"
+loaderVersion="${modLoaderVersionRange}"
 issueTrackerURL="https://github.com/Exidex/SwingThroughGrass/issues"
 license="MIT"
 
 [[mods]]
 modId="swingthroughgrass"
-version="${file.jarVersion}"
+version="${modMinecraftVersion}-${modVersion}"
 displayName="SwingThroughGrass"
 displayURL="https://minecraft.curseforge.com/projects/swingthroughgrass"
 logoFile="logo.png"
@@ -14,15 +14,15 @@ authors="Exidex"
 description='''Don't let the grass be between you and your prey!'''
 
 [[dependencies.swingthroughgrass]]
-    modId="forge"
-    mandatory=true
-    versionRange="[41.0.94,)"
+    modId="neoforge"
+    type="required"
+    versionRange="${modNeoForgeVersionRange}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.swingthroughgrass]]
     modId="minecraft"
-    mandatory=true
-    versionRange="[1.19,)"
+    type="required"
+    versionRange="${modMinecraftVersionRange}"
     ordering="NONE"
     side="BOTH"
